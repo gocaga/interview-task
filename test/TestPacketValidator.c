@@ -67,19 +67,20 @@ void Packet_Validator_should_check_that_the_one_chunk_of_dataPortion_of_PACKET_i
                                     YDCROZXIVDEGZAO93TYFJNRMZWZCNACSDLFQSFANXQQOOWXXKD6VA \
                                     HPBQOULEF772"; //!< invalid packet 3.3 on page 5 of the Interview Task
 
+    // uint8_t invalid_packet[]     = "Y1YLKDKZUJGAJTJWMDCUTOWWZFQZQKDJQQD0MAYCJFDXUIRDNWLXWCKMFLBBMFMLJJGX7AJTHJYJUXQVTNFVRUNSOAZELAYXPDSSOLEFCUUUPBZMIMVJRNVROSXQUFXFIGKAUQEYDDHIKLBWEMTBRMIBJLBYPAVXQXWPMIRYSSBAHXBIDKQRNLWTNLWGWZZVBECJSNOMKWUVD9IZELZBHRIXMKBWJLSGMSZWQDUSPPVEHRCFQBKOGKGVRHNDSSIWEDTDJCVMIBRHLSVE7EQVTZLUEIZRARJNKBJTLRKDB38A";
     uint16_t size_of_multi_chunk_packet = sizeof(multi_chunk_packet) / sizeof(multi_chunk_packet[0]);
     uint16_t size                       = sizeof(one_chunk_packet) / sizeof(one_chunk_packet[0]);
     uint16_t size_of_invalid_packet     = sizeof(invalid_packet) / sizeof(invalid_packet[0]);
 
     //!< Test the valid packet with one chunk of data
     error_status = packet_validator_validateAsciiEncodedPacket(one_chunk_packet, size);
-    // TEST_ASSERT_EQUAL(VALID_PACKET, error_status);
+    TEST_ASSERT_EQUAL(VALID_PACKET, error_status);
 
     //!< Test a valid packet with multiple chunks of data
     TEST_ASSERT_EQUAL(VALID_PACKET, packet_validator_validateAsciiEncodedPacket(multi_chunk_packet, size_of_multi_chunk_packet));
 
     //!< Test invalid packet
-    // TEST_ASSERT_EQUAL(INCORRECT_DATA_PORTION_CHECKSUM, packet_validator_validateAsciiEncodedPacket(invalid_packet, size_of_invalid_packet));
+    TEST_ASSERT_EQUAL(INCORRECT_DATA_PORTION_CHECKSUM, packet_validator_validateAsciiEncodedPacket(invalid_packet, size_of_invalid_packet));
 }
 
 int main(void)

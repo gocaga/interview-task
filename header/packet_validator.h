@@ -17,7 +17,8 @@ typedef enum
     INCORRECT_WRAPPER_CHECKSUM,
     INCORRECT_DATA_PORTION_CHECKSUM,
     INCORRECT_LAST_DATA_PORTION_CHECKSUM,
-    ZERO_DATA
+    ZERO_DATA,
+    PACKET_LARGER_THAN_16_CHUNKS
 } packet_validor_ErrorType_e;
 
 packet_validor_ErrorType_e packet_validator_validateAsciiEncodedPacket(uint8_t packet[], uint16_t size);

@@ -53,7 +53,7 @@ packet_validor_ErrorType_e packet_validator_validateAsciiEncodedPacket(uint8_t p
     uint8_t data_portion[(size - 5)];
     uint8_t multiple_chunk_data_portion[size - 5];
     uint8_t multiple_chunk_array[10][DATA_CHUNK_MAX_LENGTH];
-    uint16_t calculated_multi_chunk_checksum[10][1];
+    uint16_t calculated_multi_chunk_checksum[16][1];
 
     uint8_t last_data_chunk_chksum[3];
     uint8_t n_data_chunks = 0;
@@ -103,6 +103,8 @@ packet_validor_ErrorType_e packet_validator_validateAsciiEncodedPacket(uint8_t p
         n_data_chunks = multiple_chunk_data_portion_length / 34;
         uint8_t packet_index = SOF_HEADER_OFFSET;
 
+        if(n_data_chunks >= 16) return PACKET_LARGER_THAN_16_CHUNKS;
+        
         for (int i = 0; i < n_data_chunks; i++)
         {
             for (int j = 0; j <= DATA_CHUNK_MAX_LENGTH; j++)
@@ -115,7 +117,7 @@ packet_validor_ErrorType_e packet_validator_validateAsciiEncodedPacket(uint8_t p
         //!< Check for data portion checksum in each of the 34 byte data chunks
         uint8_t chunk_checksums[n_data_chunks][3];
         uint32_t multi_chunk_checksum_deci[n_data_chunks];
-        // idea
+        
         for (int i = 0; i < n_data_chunks; i++)
         {
             chunk_checksums[i][0] = multiple_chunk_array[i][DATA_CHUNK_MAX_LENGTH - 2];
