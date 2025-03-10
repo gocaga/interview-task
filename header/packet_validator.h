@@ -4,28 +4,22 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-// #include "packets.h"
+
+
+#define DATA_CHUNK_MAX_LENGTH (34)
+#define SOF_HEADER_OFFSET    (2)
 typedef enum
 {
     VALID_PACKET,
-    COMPLETE_PACKET,
     INCOMPLETE_PACKET,
-    VALID_TYPE,
     INVALID_TYPE,
-    VALID_SUBTYPE,
     INVALID_SUBTYPE,
-    CORRECT_WRAPPER_CHECKSUM,
     INCORRECT_WRAPPER_CHECKSUM,
-    INCORRECT_DATA_PORTION_CHECKSUM
-}packet_validor_ErrorType_e;
+    INCORRECT_DATA_PORTION_CHECKSUM,
+    INCORRECT_LAST_DATA_PORTION_CHECKSUM,
+    ZERO_DATA
+} packet_validor_ErrorType_e;
 
-// typedef struct 
-// {
-//     uint8_t packet[MAX_PACKET_LEN];
-//     uint8_t size; 
-// }packet_validator_obj;
-
-
-packet_validor_ErrorType_e packet_validator_validateAsciiEncodedPacket(uint8_t packet[], uint8_t size);
+packet_validor_ErrorType_e packet_validator_validateAsciiEncodedPacket(uint8_t packet[], uint16_t size);
 
 #endif // PACKET_VALIDATOR__H
